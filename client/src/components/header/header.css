@@ -1,0 +1,23 @@
+.header{
+    margin: 60px;
+}
+.headerTitles{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: blueviolet;
+
+
+}
+.headerTitle{
+    position: absolute;
+    top: 18%;
+
+}
+
+.image{
+  height: 450px;
+  margin-top: 80px;
+  object-fit: cover;
+
+}
