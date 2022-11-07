@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Navbar from './components/navbar/Navbar'
 import './App.css'
 import Home from './pages/home/Home'
@@ -15,10 +15,11 @@ import {
 } from 'react-router-dom'
 import Posts from './components/posts/Posts'
 import SinglePost from './components/singlePost/SinglePost'
+import { Context } from './context/Context'
 
 const App = () => {
 
-  const user=false;
+  const {user}=useContext(Context);
   return (
     <div>
        
