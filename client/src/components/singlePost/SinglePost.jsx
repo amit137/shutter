@@ -49,6 +49,7 @@ getPost()
    try{
     await axios.delete(`/posts/${post._id}`,{data:{username:user.username}})
     setUpdated(false)
+    window.location.replace('/')
    }catch(err){
 
    }

@@ -7,14 +7,20 @@ import "./setting.css";
 import axios from "axios";
 
 const Setting = () => {
-  const { user } = useContext(Context);
+  const { user,dispatch } = useContext(Context);
+  const PF='http://localhost:5000/images/'
+
+ 
+
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [success,setSuccess]=useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch({type:'UPDATE_START'})
     const updatedUser = {
       userId: user._id,
       username,
@@ -33,8 +39,12 @@ const Setting = () => {
       } catch (err) {}
     }
     try {
-    await axios.put("/users" + user._id, updatedUser);
-    } catch (err) {}
+    const res=await axios.put("/users/" + user._id, updatedUser);
+    setSuccess(true)
+    dispatch({type:'UPDATE_SUCCESS',payload:res.data})
+    } catch (err) {
+      dispatch({type:'UPDATE_FAILURE'})
+    }
   };
 
   return (
@@ -47,7 +57,7 @@ const Setting = () => {
         <form action="" className="settingForm" onSubmit={handleSubmit}>
           <label>Profile Picture</label>
           <div className="settingDP">
-            <img src={user.profilePic} alt="" srcset="" />
+            <img src={file ? URL.createObjectURL(file) : PF+user.profilePic} alt='profilepic'/>
             <label htmlFor="fileInput">
               <button className="settingDPIcon">+</button>
             </label>
@@ -59,8 +69,12 @@ const Setting = () => {
           <label htmlFor="">Email</label>
           <input type="email" name="" placeholder={user.email} onChange={(e)=>setEmail(e.target.value)} />
           <label htmlFor="">Password</label>
-          <input type="password" name=""  id="" />
+          <input type='password'  onChange={(e)=>setPassword(e.target.value)}/>
           <button className="settingSubmit" type="submit">Update</button>
+
+          {success && (
+            <span>Profile has been updated</span>
+          )}
         </form>
       </div>
       <Sidebar />
